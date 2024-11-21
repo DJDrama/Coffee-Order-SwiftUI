@@ -16,16 +16,15 @@ enum Endpoints {
             
         case .allOrders:
             return "/orders"
-        }
-        
         case .placeOrder:
             return "/test/new-order"
+        }
     }
 }
 
 struct Configuration {
     lazy var environment: AppEnvironment = {
-       // read the value from environment variable
+        // read the value from environment variable
         guard let env = ProcessInfo.processInfo.environment["ENV"] else {
             return AppEnvironment.dev
         }
