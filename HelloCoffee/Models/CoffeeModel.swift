@@ -18,6 +18,11 @@ class CoffeeModel: ObservableObject {
         self.webService = webService
     }
     
+    func placeOrder(order: Order) async throws{
+        let newOrder = try await webService.placeOrder(order: order)
+        orders.append(newOrder)
+    }
+    
     func populateOrders() async throws {
         orders = try await webService.getOrders()
     }

@@ -21,6 +21,9 @@ struct AddCoffeeView: View {
     @State private var coffeeSize: CoffeeSize = .medium
     @State private var errors = AddCoffeeErrors()
     
+    @EnvironmentObject private var model: CoffeeModel
+    @Environment(\.dismiss) private var dismiss
+    
     var isValid: Bool {
         errors = AddCoffeeErrors()
         
@@ -43,43 +46,57 @@ struct AddCoffeeView: View {
     }
     
     var body: some View {
-        Form {
-            TextField("Name", text: $name)
-                .accessibilityIdentifier("name")
-            Text(errors.name).visible(!errors.name.isEmpty)
-                .foregroundStyle(.red)
-                .font(.caption)
-            
-            TextField("Coffee name", text: $coffeeName)
-                .accessibilityIdentifier("coffeeName")
-            Text(errors.coffeeName).visible(!errors.coffeeName.isEmpty)
-                .foregroundStyle(.red)
-                .font(.caption)
-            
-            TextField("Price", text: $price)
-                .accessibilityIdentifier("price")
-            Text(errors.price).visible(!errors.price.isEmpty)
-                .foregroundStyle(.red)
-                .font(.caption)
-            
-            Picker("Select size", selection: $coffeeSize) {
-                ForEach(CoffeeSize.allCases, id: \.rawValue){ size in
-                    Text(size.rawValue).tag(size)
-                }
-            }.pickerStyle(.segmented)
-            
-            Button("Place Order") {
-                if isValid {
-                    // place the order
-                }
+        NavigationStack{
+            Form {
+                TextField("Name", text: $name)
+                    .accessibilityIdentifier("name")
+                Text(errors.name).visible(!errors.name.isEmpty)
+                    .foregroundStyle(.red)
+                    .font(.caption)
                 
-            }.accessibilityIdentifier("placeOrderButton")
-                .centerHorizontally()
+                TextField("Coffee name", text: $coffeeName)
+                    .accessibilityIdentifier("coffeeName")
+                Text(errors.coffeeName).visible(!errors.coffeeName.isEmpty)
+                    .foregroundStyle(.red)
+                    .font(.caption)
+                
+                TextField("Price", text: $price)
+                    .accessibilityIdentifier("price")
+                Text(errors.price).visible(!errors.price.isEmpty)
+                    .foregroundStyle(.red)
+                    .font(.caption)
+                
+                Picker("Select size", selection: $coffeeSize) {
+                    ForEach(CoffeeSize.allCases, id: \.rawValue){ size in
+                        Text(size.rawValue).tag(size)
+                    }
+                }.pickerStyle(.segmented)
+                
+                Button("Place Order") {
+                    if isValid {
+                        // place the order
+                        Task {
+                            await placeOrder()
+                            dismiss()
+                        }
+                    }
+                    
+                }.accessibilityIdentifier("placeOrderButton")
+                    .centerHorizontally()
+            }.navigationTitle("Add Coffee")
         }
-        
+    }
+    
+    private func placeOrder() async {
+        let order = Order(name: name, coffeeName: coffeeName, total: Double(price) ?? 0, size: coffeeSize)
+        do {
+            try await model.placeOrder(order: order)
+        }catch {
+            print(error)
+        }
     }
 }
 
 #Preview {
-    AddCoffeeView()
+        AddCoffeeView()
 }
