@@ -80,7 +80,6 @@ struct AddCoffeeView: View {
                             dismiss()
                         }
                     }
-                    
                 }.accessibilityIdentifier("placeOrderButton")
                     .centerHorizontally()
             }.navigationTitle("Add Coffee")
