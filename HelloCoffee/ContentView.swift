@@ -13,8 +13,12 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            List(model.orders) { order in
-                OrderCellView(order: order)
+            if model.orders.isEmpty {
+                Text("No orders available!").accessibilityIdentifier("noOrdersText")
+            }else {
+                List(model.orders) { order in
+                    OrderCellView(order: order)
+                }
             }
         }.task {
             await populateOrders()
@@ -33,8 +37,10 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView()
-        .environmentObject(CoffeeModel(webService: WebService()))
+    var config = Configuration()
+    let coffeeModel = CoffeeModel(webService: WebService(baseURL: config.environment.baseURL))
+    return ContentView()
+        .environmentObject(coffeeModel)
 }
 
 

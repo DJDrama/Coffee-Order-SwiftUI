@@ -13,7 +13,8 @@ struct HelloCoffeeApp: App {
     @StateObject private var model: CoffeeModel
     
     init() {
-        let webService = WebService()
+        var config = Configuration()
+        let webService = WebService(baseURL: config.environment.baseURL)
         _model = StateObject(wrappedValue: CoffeeModel(webService: webService))
     }
     
