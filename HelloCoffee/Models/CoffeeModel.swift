@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 class CoffeeModel: ObservableObject {
     
-    @Published private var orders: [Order] = []
+    @Published private(set) var orders: [Order] = []
     
     let webService: WebService
     
