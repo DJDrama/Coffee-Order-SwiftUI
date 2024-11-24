@@ -38,7 +38,7 @@ struct ContentView: View {
                         ForEach(model.orders) { order in
                             OrderCellView(order: order)
                         }.onDelete(perform: deleteOrder)
-                    }
+                    }.accessibilityIdentifier("orderList")
                 }
             }.task {
                 await populateOrders()
