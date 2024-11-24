@@ -21,6 +21,7 @@
 		D24D833B2CEF23C500E5BF8E /* AddCoffeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D833A2CEF23C500E5BF8E /* AddCoffeeView.swift */; };
 		D24D833D2CEF2ED700E5BF8E /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D833C2CEF2ED700E5BF8E /* View+Extensions.swift */; };
 		D24D833F2CEF31B900E5BF8E /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D833E2CEF31B900E5BF8E /* String+Extensions.swift */; };
+		D24D83412CF3205500E5BF8E /* OrderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24D83402CF3205500E5BF8E /* OrderDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		D24D833A2CEF23C500E5BF8E /* AddCoffeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoffeeView.swift; sourceTree = "<group>"; };
 		D24D833C2CEF2ED700E5BF8E /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		D24D833E2CEF31B900E5BF8E /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		D24D83402CF3205500E5BF8E /* OrderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			children = (
 				D24D83262CEF1B3100E5BF8E /* OrderCellView.swift */,
 				D24D833A2CEF23C500E5BF8E /* AddCoffeeView.swift */,
+				D24D83402CF3205500E5BF8E /* OrderDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			files = (
 				D24D831C2CEF136600E5BF8E /* WebService.swift in Sources */,
 				D24D833F2CEF31B900E5BF8E /* String+Extensions.swift in Sources */,
+				D24D83412CF3205500E5BF8E /* OrderDetailView.swift in Sources */,
 				D24D83272CEF1B3100E5BF8E /* OrderCellView.swift in Sources */,
 				D24D83212CEF163B00E5BF8E /* CoffeeModel.swift in Sources */,
 				D24D83242CEF1ABA00E5BF8E /* NumberFormatter+Extensions.swift in Sources */,
