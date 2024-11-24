@@ -95,7 +95,7 @@ final class when_adding_a_new_coffee_order: XCTestCase {
     }
     
     func test_should_display_coffee_order_in_list_successfully() throws {
-       // XCTAssertEqual("John", app.staticTexts["orderNameText"].label)
+        XCTAssertEqual("John", app.staticTexts["orderNameText"].label)
         //print(app.staticTexts["coffeeNameAndSizeText"].label)
        // XCTAssertEqual("Hot Coffee (Medium)", app.staticTexts["coffeeNameAndSizeText"].label)
         //XCTAssertEqual("4.50", app.staticTexts["coffeePriceText"].label)

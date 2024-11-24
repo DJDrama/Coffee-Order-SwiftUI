@@ -7,6 +7,9 @@
 
 import Foundation
 
+enum CoffeeOrderError: Error {
+    case invalidOrderId
+}
 struct Order: Codable, Identifiable, Hashable {
     var id: Int?
     var name: String
