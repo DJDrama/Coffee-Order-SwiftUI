@@ -14,7 +14,10 @@ struct AddCoffeeErrors {
     
 }
 
-struct AddCoffeeView: View {
+struct AddOrUpdateCoffeeView: View {
+    
+    var orderForUpdate: Order? = nil
+    
     @State private var name: String = ""
     @State private var coffeeName: String = ""
     @State private var price: String = ""
@@ -72,24 +75,60 @@ struct AddCoffeeView: View {
                     }
                 }.pickerStyle(.segmented)
                 
-                Button("Place Order") {
+                Button(orderForUpdate != nil ? "Update Order" : "Place Order") {
                     if isValid {
                         // place the order
                         Task {
-                            await placeOrder()
+                            await saveOrUpdate()
                             dismiss()
                         }
                     }
                 }.accessibilityIdentifier("placeOrderButton")
                     .centerHorizontally()
-            }.navigationTitle("Add Coffee")
+            }.navigationTitle(orderForUpdate != nil ? "Update Coffee" : "Add Coffee")
+                .onAppear(perform: {
+                    populateExistingOrder()
+                })
         }
     }
     
-    private func placeOrder() async {
-        let order = Order(name: name, coffeeName: coffeeName, total: Double(price) ?? 0, size: coffeeSize)
+    private func populateExistingOrder() {
+        if let order = orderForUpdate {
+            name = order.name
+            coffeeName = order.coffeeName
+            price = String(order.total)
+            coffeeSize = order.size
+        }
+    }
+    
+    private func saveOrUpdate() async {
+        if let order = orderForUpdate {
+            var editOrder = order
+            editOrder.name = name
+            editOrder.total = Double(price) ?? 0.0
+            editOrder.coffeeName = coffeeName
+            editOrder.size = coffeeSize
+            await updateOrder(editOrder)
+        } else {
+            let order = Order(name: name, coffeeName: coffeeName, total: Double(price) ?? 0, size: coffeeSize)
+            await placeOrder(order: order)
+            
+        }
+    }
+    
+    private func updateOrder(_ order: Order) async {
+        do {
+            try await model.updateOrder(order: order)
+            dismiss()
+        }catch {
+            print(error)
+        }
+    }
+    
+    private func placeOrder(order: Order) async {
         do {
             try await model.placeOrder(order: order)
+            dismiss()
         }catch {
             print(error)
         }
@@ -97,5 +136,5 @@ struct AddCoffeeView: View {
 }
 
 #Preview {
-        AddCoffeeView()
+    AddOrUpdateCoffeeView()
 }

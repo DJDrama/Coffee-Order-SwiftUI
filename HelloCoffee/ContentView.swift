@@ -56,7 +56,7 @@ struct ContentView: View {
                 }
             })
             .sheet(isPresented: $isPresented, content: {
-                AddCoffeeView()
+                AddOrUpdateCoffeeView()
             })
         }
     }

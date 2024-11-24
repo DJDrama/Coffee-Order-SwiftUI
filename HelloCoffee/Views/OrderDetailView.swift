@@ -11,6 +11,7 @@ struct OrderDetailView: View {
     let orderId: Int
     @EnvironmentObject private var model: CoffeeModel
     @State private var isPresented: Bool = false
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
@@ -27,7 +28,9 @@ struct OrderDetailView: View {
                     HStack {
                         Spacer()
                         Button("Delete Order", role: .destructive) {
-                            
+                            Task {
+                                await deleteOrder(orderId: orderId)
+                            }
                         }
                         Button("Edit Order") {
                             isPresented = true
@@ -35,12 +38,21 @@ struct OrderDetailView: View {
                         Spacer()
                     }
                 }.sheet(isPresented: $isPresented) {
-                    AddCoffeeView()
+                    AddOrUpdateCoffeeView(orderForUpdate: order)
                 }
             }
             Spacer()
         }
         .padding()
+    }
+    
+    private func deleteOrder(orderId: Int) async {
+        do {
+            try await model.deleteOrder(orderId)
+            dismiss()
+        }catch {
+            print(error)
+        }
     }
 }
 
